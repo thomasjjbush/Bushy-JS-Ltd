@@ -1,0 +1,7 @@
+.logo {
+  fill: var(--label);
+
+  &--inverse {
+    fill: var(--background);
+  }
+}

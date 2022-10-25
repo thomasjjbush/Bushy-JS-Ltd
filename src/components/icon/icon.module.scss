@@ -1,0 +1,180 @@
+.icon {
+  color: var(--label);
+  display: inline-block;
+  font-family: icons;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: normal;
+  line-height: 1;
+  margin: 0.5rem;
+  speak: never;
+  text-transform: none;
+
+  &--contact-submit::before {
+    content: "\e91d";
+  }
+
+  &--contact::before {
+    content: "\e91e";
+  }
+
+  &--share::before {
+    content: "\ea82";
+  }
+
+  &--whatsapp::before {
+    content: "\ea93";
+  }
+
+  &--github::before {
+    content: "\eab0";
+  }
+
+  &--linkedin::before {
+    content: "\eac9";
+  }
+
+  &--home::before {
+    content: "\e91c";
+  }
+
+  &--locked::before {
+    content: "\e91b";
+  }
+
+  &--architecture::before {
+    content: "\e90d";
+  }
+
+  &--bug::before {
+    content: "\e90e";
+  }
+
+  &--ci::before {
+    content: "\e90f";
+  }
+
+  &--ui::before,
+  &--ux::before {
+    content: "\e917";
+  }
+  
+  &--design::before {
+    content: "\e910";
+  }
+
+  &--estimation::before {
+    content: "\e911";
+  }
+
+  &--greenfield::before {
+    content: "\e912";
+  }
+
+  &--mentoring::before {
+    content: "\e913";
+  }
+
+  &--new-features::before {
+    content: "\e914";
+  }
+
+  &--testing::before {
+    content: "\e916";
+  }
+
+  &--review::before {
+    content: "\e915";
+  }
+
+  &--chevron-right::before {
+    content: "\e90b";
+  }
+
+  &--chevron-left::before {
+    content: "\e90c";
+  }
+
+  &--add-comment::before {
+    content: '\e900';
+  }
+
+  &--close::before {
+    content: '\e904';
+  }
+
+  &--comment::before {
+    content: '\e901';
+  }
+
+  &--dark-mode::before {
+    content: '\e905';
+  }
+
+  &--delete::before {
+    content: '\e902';
+  }
+
+  &--employment::before {
+    content: '\e906';
+  }
+
+  &--like::before {
+    content: '\e903';
+  }
+
+  &--like-liked::before {
+    content: '\e918';
+  }
+
+  &--locale::before {
+    content: '\e907';
+  }
+
+  &--menu::before {
+    content: '\e908';
+  }
+
+  &--projects::before {
+    content: '\e909';
+  }
+
+  &--search::before {
+    content: '\e90a';
+  }
+
+  &--sign-in::before {
+    content: '\e919';
+  }
+
+  &--sign-out::before {
+    content: '\e91a';
+  }
+
+  &--S {
+    font-size: 1.3rem;
+  }
+
+  &--M {
+    font-size: 2rem;
+  }
+
+  &--L {
+    font-size: 3rem;
+  }
+
+  &--X-L {
+    font-size: 6rem;
+  }
+
+  &--inverse {
+    color: var(--background);
+  }
+
+  &--primary {
+    color: var(--primary);
+  }
+}
+

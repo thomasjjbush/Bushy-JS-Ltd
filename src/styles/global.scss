@@ -1,0 +1,80 @@
+@import '~modern-normalize/modern-normalize.css';
+
+@font-face {
+  font-display: block;
+  font-family: icons;
+  font-style: normal;
+  font-weight: normal;
+  src: url('./fonts/icons.woff') format('woff'); 
+}
+
+$dark-grey: #111111;
+$darker-grey: #010101;
+$error: #ff2946;
+$light-grey: #f4f4f4;
+$medium-grey: #0a0a0a;
+$orange: #FF8700;
+$white: #ffffff;
+
+:root {
+  --background: #{$white};
+  --border: #{$dark-grey};
+  --error: #{$error};
+  --label: #{$dark-grey};
+  --loading: #{$light-grey};
+  --primary: #{$orange};
+  --raised: #{$light-grey};
+  --transparent: rgb(255 255 255 / 70%);
+}
+
+:root[data-theme="dark"] {
+  --background: #{$dark-grey};
+  --border: #{$white};
+  --label: #{$white};
+  --loading: #{$medium-grey};
+  --raised: #{$darker-grey};
+  --transparent: rgb(17 17 17 / 70%);
+}
+
+body {
+  background-color: var(--background);
+  width: 100%;
+}
+
+button {
+  appearance: none;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+a, button, h1, h2, h3, h4, h5, h6, input, label, p, select, span, textarea {
+  color: var(--label);
+  margin: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--primary);
+}
+
+a, button, input, select, textarea {
+  &:focus-visible {
+    outline: dashed 2px var(--primary);
+    outline-offset: 2px;
+  }
+}
+
+main {
+  margin: auto;
+  max-width: 1200px;
+  padding: 0 2rem;
+
+  section {
+    padding-top: 4rem;
+  
+    h2 {
+      font-size: 2.1rem;
+    }
+  }
+}

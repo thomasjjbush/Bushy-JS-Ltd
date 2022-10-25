@@ -1,0 +1,33 @@
+.button {
+  color: var(--primary);
+  display: flex;
+  gap: 0.75rem;
+  padding: 1rem 1.25rem;
+  position: relative;
+  text-decoration: none;
+  transition: background-color 200ms ease-in-out, color 200ms ease-in-out;
+
+  &:hover,
+  &:focus-visible {
+    background-color: var(--primary);
+    color: #000000;
+    outline: none;
+
+    span {
+      color: inherit;
+    }
+  }
+
+  &--disabled {
+    opacity: 0.5;
+
+    a, button {
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+  }
+
+  span {
+    margin: 0;
+  }
+}

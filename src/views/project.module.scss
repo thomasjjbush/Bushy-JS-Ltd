@@ -1,0 +1,153 @@
+.project {  
+  &__client {
+    margin-bottom: 2rem;
+    margin-top: 0.5rem;
+  }
+
+  &__likes {
+    margin-bottom: 2rem;
+
+    span {
+      margin-left: 0;
+    }
+  }
+
+  &__tags {
+    margin-bottom: 1rem;
+
+    &__tag {
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      margin-right: 1rem;
+      padding: 1rem 1.25rem;
+    }
+  }
+
+  &__description {
+    white-space: pre-wrap;
+  }
+
+  &__responsibilities-title {
+    margin-bottom: -8px;
+    margin-left: -2px;
+  }
+
+  &__responsibilities {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    padding-top: 4rem;
+    position: relative;
+
+    &::before {
+      background-color: var(--primary);
+      content: '';
+      height: 4rem;
+      position: absolute;
+      width: 4px;
+    }
+  }
+
+  &__responsibility {
+    border-left: solid 4px var(--primary);
+    display: flex;
+    flex-direction: column;
+
+    &:nth-of-type(1),
+    &:nth-of-type(2) {
+      border-top: solid 4px var(--primary);
+    }
+
+    &__icon {
+      margin: 2rem;
+    }
+
+    &__name {
+      margin: 0 2rem;
+      position: relative;
+
+      &::before {
+        background-color: var(--primary);
+        content: '';
+        height: 4px;
+        left: -2rem;
+        position: absolute;
+        top: 0.5rem;
+        width: 1.5rem;
+      }
+    }
+
+    &__description {
+      flex: 1;
+      padding: 2rem;
+      position: relative;
+
+      &::before {
+        background-color: var(--background);
+        bottom: 0;
+        left: -5px;
+        position: absolute;
+        top: -9.5px;
+        width: 6px;
+      }
+    }
+
+    &:nth-last-child(1) {
+      .project__responsibility__description::before {
+        content: '';
+      }
+    }
+
+    &:nth-last-child(2) {
+      .project__responsibility__description::before {
+        content: '';
+      }
+    }
+
+    &:nth-last-child(3) {
+      .project__responsibility__description::before {
+        content: '';
+      }
+    }
+  }
+
+  @media only screen and (max-width: 960px) {
+    .project__responsibilities {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .project__responsibility {
+      &:nth-of-type(2) {
+        border-top: none;
+      }
+
+      &:nth-last-child(3) {
+        .project__responsibility__description::before {
+          content: none;
+        }
+      }
+    }    
+  }
+
+  @media only screen and (max-width: 680px) {
+    .project__responsibilities {
+      grid-template-columns: repeat(1, 1fr);
+    }
+
+    .project__responsibility {
+      .project__responsibility__description {
+        padding-right: 0;
+      }
+
+      &:nth-of-type(1) {
+        border-top: none;
+      }
+
+      &:nth-last-child(2) {
+        .project__responsibility__description::before {
+          content: none;
+        }
+      }
+    }
+  }
+}

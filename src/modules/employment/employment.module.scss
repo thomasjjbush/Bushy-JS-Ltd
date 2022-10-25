@@ -1,0 +1,183 @@
+.container {
+  align-items: flex-start;
+  display: flex;
+
+  & > div {
+    min-width: 0;
+  }
+
+  .vector {
+    flex-shrink: 0;
+    margin-top: 1.75rem;
+    max-width: 500px;
+    position: sticky;
+    top: -4px;
+  }
+
+  .title {
+    align-items: flex-end;
+    display: flex;
+    margin-bottom: 4rem;
+    margin-left: -2px;
+
+    &__label {
+      color: inherit;
+    }
+
+    &__wire {
+      background-color: var(--primary);
+      display: block;
+      flex: 1;
+      height: 4px;
+      margin-bottom: 6px;
+      margin-left: -2px;
+      width: 200px;
+    }
+  }
+
+  .employment {
+    align-items: flex-start;
+    display: flex;
+    padding: 0 1rem 0 4rem;
+    position: relative;
+
+    &:not(:last-of-type) {
+      border-left: solid 4px var(--primary);
+      margin-bottom: 4rem;
+    }
+
+    &::before {
+      background-color: var(--primary);
+      content: '';
+      height: 4px;
+      left: 0;
+      position: absolute;
+      top: 1rem;
+      width: 4rem;
+    }
+
+    &::after {
+      background-color: var(--primary);
+      content: '';
+      height: 5rem;
+      left: -4px;
+      position: absolute;
+      top: -5rem;
+      width: 4px
+    }
+
+    &:last-of-type::after {
+      height: 6rem;
+      left: 0;
+    }
+
+    &__logo {
+      border: solid 4px var(--primary);
+      border-radius: 5px;
+      flex-shrink: 0;
+      height: 90px;
+      margin-right: 1rem;
+      overflow: hidden;
+      width: 90px;
+
+      img {
+        width: 100%;
+      }
+    }
+
+    &__name,
+    &__responsibilities,
+    &__title {
+      display: block;
+    }
+  
+    &__name {
+      color: var(--primary);
+      display: inline-block;
+      margin-bottom: 1rem;
+    }
+  
+    &__title {
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+
+    &__time {
+      font-size: 0.8rem;
+      font-weight: bold;
+      margin-top: 0.5rem;
+    }
+
+    &--loading {
+      & > div {
+        overflow: hidden;
+      }
+
+      a:empty,
+      p:empty {
+        background-color: var(--loading);
+      }
+
+      .employment__title {
+        height: 1.5rem;
+        width: 150px;
+      }
+
+      .employment__responsibilities {
+        height: 6rem;
+        width: 500px;
+      }
+    }
+  }
+
+  @media only screen and (max-width: 960px) {
+    .title {
+      margin-bottom: 2rem;
+    }
+
+    .employment {
+      flex-direction: column;
+      margin-bottom: 2rem;
+      padding: 0 0 0 2rem;
+
+      &:not(:last-of-type) {
+        margin-bottom: 2rem;
+      }
+
+      &::before {
+        width: 2rem;
+      }
+
+      &::after {
+        height: 3rem;
+        top: -3rem;
+      }
+
+      &:last-of-type::after {
+        height: 4rem;
+        left: 0;
+      }
+
+      &__title {
+        margin-top: 1rem;
+      }
+    }
+
+    .vector {
+      max-width: 400px;
+    }
+  }
+
+  @media only screen and (max-width: 680px) {
+    .title {
+      &__wire {
+        display: none;
+      }
+    }
+
+    .vector {
+      display: none;
+    }
+  }
+}
+

@@ -1,0 +1,51 @@
+.user-profile {
+  align-items: flex-start;
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  padding: 2rem;
+
+  &--S {
+    .user-profile__avatar {
+      height: 3rem;
+      width: 3rem;
+    }
+
+    .user-profile__name {
+      font-size: 1rem;
+    }
+  }
+
+  &--L {
+    .user-profile__avatar {
+      height: 3rem;
+      width: 7rem;
+    }
+
+    .user-profile__name {
+      font-size: 1.4rem;
+    }
+  }
+
+  &__avatar {
+    align-items: center;
+    border-radius: 50%;
+    display: flex;
+    font-size: 1.5rem;
+    height: 5rem;
+    justify-content: center;
+    margin: 0 auto 1rem;
+    overflow: hidden;
+    width: 5rem;
+  }
+
+  &__name {
+    font-size: 1.2rem;
+    font-weight: 600;
+  }
+
+  &__children {
+    flex: 1;
+    min-width: 0;
+  }
+}

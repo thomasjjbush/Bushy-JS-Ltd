@@ -1,0 +1,28 @@
+.container {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 1rem 1rem;
+
+  .info {
+    display: flex;
+
+    span {
+      margin: 0 0.5rem 0 0;
+    }
+  }
+
+  .select {
+    appearance: none;
+    background-color: transparent;
+    border: solid 2px var(--border);
+    border-radius: 12px;
+    cursor: pointer;
+    height: 26px;
+    padding: 0 12px;
+  }
+
+  .expand {
+    position: absolute;
+  }
+}

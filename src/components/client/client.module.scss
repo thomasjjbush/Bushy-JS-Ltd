@@ -1,0 +1,9 @@
+.client {
+  display: inline-block;
+  height: 20px;
+  width: auto;
+
+  &--inverse {
+    filter: brightness(0) invert(1);
+  }
+}

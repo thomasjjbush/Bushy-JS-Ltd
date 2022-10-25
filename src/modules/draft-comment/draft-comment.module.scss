@@ -1,0 +1,22 @@
+.container {
+  .angle {
+    display: block;
+    margin-bottom: 1rem;
+
+    .text-area {
+      background-color: var(--raised);
+      border: 0;
+      padding: 2rem;
+      resize: none;
+      width: 100%;
+
+      &:focus-visible {
+        outline: none;
+
+        &::placeholder {
+          color: var(--primary);
+        }
+      }
+    }
+  }
+}

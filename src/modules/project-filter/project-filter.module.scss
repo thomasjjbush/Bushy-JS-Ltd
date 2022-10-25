@@ -1,0 +1,41 @@
+.container {
+  border-bottom: solid 4px var(--primary);
+
+  .project-filter {
+    margin-left: auto;
+    max-width: calc(33% + 0.5rem - 6px);
+    text-align: right;
+
+    &__title {
+      align-items: flex-end;
+      display: flex;
+
+      &::before {
+        background-color: var(--primary);
+        content: '';
+        flex: 1;
+        height: 4px;
+      }
+
+      span {
+        color: inherit;
+        margin-bottom: -6px;
+        margin-left: -2px;
+      }
+    }
+
+    &__input {
+      border-left: solid 4px var(--primary);
+      min-width: 0;
+      padding: 4rem 0 4rem 4rem;
+    }
+
+    @media only screen and (max-width: 960px) {
+      max-width: calc(50% + 0.5rem - 6px);
+    }
+
+    @media only screen and (max-width: 680px) {
+      max-width: unset;
+    }
+  }
+}

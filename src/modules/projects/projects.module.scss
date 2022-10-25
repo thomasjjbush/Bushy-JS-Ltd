@@ -1,0 +1,114 @@
+.wrapper {
+  background-color: var(--raised);
+  margin: 0 calc(50% - 50vw);
+  margin-top: 4rem;
+  width: 100vw;
+
+  .container {
+    margin: auto;
+    max-width: 1200px;
+    padding: 0 2rem;
+
+    .projects {
+      display: grid;
+      gap: 2rem;
+      grid-template-columns: repeat(3, 1fr);
+      margin-top: 2rem;
+      padding-bottom: 4rem;
+  
+      .project {
+        background-color: var(--background);
+        position: relative;
+  
+        &::before {
+          background-color: var(--raised);
+          border-right: solid 4px var(--primary);
+          content: '';
+          height: 2rem;
+          position: absolute;
+          top: -2rem;
+          width: 50%;
+        }
+  
+        &:nth-of-type(1)::before,
+        &:nth-of-type(3)::before {
+          height: calc(2rem + 4px);
+          top: calc(-2rem - 4px);
+        }
+  
+        &:nth-of-type(3)::before {
+          border-left: solid 4px var(--primary);
+          border-right: 0;
+          left: unset;
+          right: 0;
+        }
+  
+        &--loading {
+          background-color: var(--loading);
+        }
+  
+        &__client {
+          float: right;
+          margin: 1rem;
+        }
+  
+        &__details {
+          padding: 1rem;
+  
+          & > * {
+            margin-bottom: 1rem;
+          }
+        }
+  
+        &__interactions {
+          align-items: center;
+          display: flex;
+          gap: 1rem;
+          justify-content: space-between;
+  
+          &__stats {
+            display: flex;
+            font-size: 0.7rem;
+            font-weight: 600;
+            gap: 0.5rem;
+            margin-right: 1rem;
+            text-align: center;
+          }
+        }
+  
+        &__thumbnail {
+          aspect-ratio: 1 / 1;
+          display: block;
+          object-fit: cover;
+          padding: 0 1rem;
+        }
+      }
+  
+      @media only screen and (max-width: 960px) {
+        grid-template-columns: repeat(2, 1fr);
+  
+        .project:nth-of-type(2)::before {
+          border-left: solid 4px var(--primary);
+          border-right: 0;
+          height: calc(2rem + 4px);
+          left: unset;
+          right: 0;
+          top: calc(-2rem - 4px);
+        }
+      }
+  
+      @media only screen and (max-width: 680px) {
+        grid-template-columns: repeat(1, 1fr);
+  
+        .project:nth-of-type(1)::before {
+          border-left: solid 4px var(--primary);
+          border-right: 0;
+          height: calc(2rem + 4px);
+          left: unset;
+          right: 0;
+          top: calc(-2rem - 4px);
+        }
+      }
+    }
+  }
+}

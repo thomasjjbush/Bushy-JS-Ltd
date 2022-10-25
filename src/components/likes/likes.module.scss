@@ -1,0 +1,37 @@
+.like {
+  align-items: center;
+  display: flex;
+
+  &__button {
+    position: relative;
+  
+    &__fill {
+      position: absolute;
+      transform: scale(0);
+      transform-origin: 50%;
+      transition: transform 200ms ease-in-out;
+  
+      &--filled {
+        transform: scale(1);
+      }
+    }
+  
+    &__outline {
+      position: relative;
+      transition: color 200ms ease-in-out;
+  
+      &--liked {
+        color: var(--primary);
+      }
+    }
+
+    &--disabled {
+      cursor: not-allowed;
+    }
+  }
+
+  p {
+    font-weight: 600;
+  }
+}
+

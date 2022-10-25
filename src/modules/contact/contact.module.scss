@@ -1,0 +1,87 @@
+.container {
+  margin-bottom: 4rem;
+
+  h2 {
+    margin-bottom: 2rem;
+  }
+
+  button span {
+    color: var(--primary);
+  }
+
+  .contact {
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 2rem;
+  
+    & > div {
+      flex: 1;
+    }
+  
+    &__field {
+      margin: 1rem 0 2rem;
+      resize: none;
+
+      input:not([value=""]):invalid {
+        border: solid red 2px;
+      }
+  
+      &--message {
+        background-color: var(--raised);
+        border: 0;
+        height: 100%;
+        margin: 0;
+        padding: 2rem;
+        width: 100%;
+
+        &:focus-visible {
+          outline: none;
+          
+          &::placeholder {
+            color: var(--primary);
+          }
+        }
+      }
+    }
+  
+    &__message {
+      display: flex;
+      flex-direction: column;
+      min-width: 65%;
+      text-align: right;
+
+      & > div {
+        flex: 1;
+        margin-top: 1rem;
+      }
+
+      @media only screen and (max-width: 960px) {
+        min-width: 50%;
+      }
+    }
+  
+    &__select {
+      margin-bottom: 1rem;
+      padding-left: 0;
+      padding-right: 0;
+    }
+
+    @media only screen and (max-width: 680px) {
+      flex-direction: column;
+      gap: 0;
+    }
+  }
+
+  .social {
+    margin-top: 2rem;
+
+    &__link {
+      display: inline-block;
+      margin-right: 1rem;
+
+      &:hover span {
+        color: var(--primary);
+      }
+    }
+  }
+}

@@ -1,0 +1,141 @@
+.container {
+  .title {
+    margin-right: -6px;
+    text-align: right;
+  }
+
+  .skill {
+    align-items: center;
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 4px;
+    position: relative;
+
+    & > div {
+      min-width: 0;
+
+      &:not(:last-of-type) {
+        margin-bottom: 2rem;
+      }
+    }
+
+    &__image {
+      flex-shrink: 0;
+    }
+
+    &__name {
+      align-items: center;
+      display: flex;
+      font-size: 2.1rem;
+      gap: 1rem;
+      margin: 1rem 0;
+      text-transform: capitalize;
+
+      &::after {
+        border-top: dotted 6px var(--primary);
+        content: '';
+        flex: 1;
+        margin-right: 4px;
+      }
+    }
+
+    &__description {
+      margin: 0 2rem 1rem 0;
+    }
+
+    &--design {
+      border-right: dotted 6px var(--primary);
+
+      img {
+        max-width: 47%;
+      }
+    }
+
+    &--backend {
+      flex-direction: row-reverse;
+      gap: 0;
+
+      img {
+        border: dotted 6px var(--primary);
+        border-right: 0;
+        max-width: 37%;
+        padding: 2rem 0 2rem 2rem;
+      }
+    }
+
+    &--frontend {
+      align-items: flex-start;
+
+      img {
+        max-width: 37%;
+      }
+
+      .skill__name {
+        justify-content: flex-end;
+        margin: 4rem 0 1rem;
+
+        &::before {
+          border-right: dotted 6px var(--primary);
+          content: '';
+          height: 5.4rem;
+          position: absolute;
+          top: 0;
+        }
+
+        &::after {
+          margin-right: 12px;
+        }
+      }
+    }
+  }
+
+  @media only screen and (max-width: 680px) {
+    .skill {
+      align-items: center;
+      border-right: dotted 6px var(--primary);
+      flex-direction: column;
+
+      &--design {
+        img {
+          margin-top: 4rem;
+          max-width: 90%;
+        }
+      }
+
+      &--backend {
+        img {
+          border: 0;
+          max-width: 70%;
+          padding: 0;
+        } 
+      }
+
+      &--frontend {
+        & > div {
+          outline: solid 6px var(--background);
+        }
+
+        img {
+          max-width: 80%;
+        }
+  
+        .skill__name {
+          margin: 1rem 0;
+          position: relative;
+  
+          &::before {
+            height: 2.6rem;
+            position: absolute;
+            right: -6px;
+            top: -1.2rem;
+          }
+  
+          &::after {
+            margin-right: 4px;
+            max-width: unset;
+          }
+        }
+      }
+    }
+  }
+}

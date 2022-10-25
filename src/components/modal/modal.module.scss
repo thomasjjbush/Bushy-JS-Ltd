@@ -1,0 +1,33 @@
+.modal-backdrop {
+  align-items: center;
+  background-color: var(--transparent);
+  bottom: 0;
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  left: 0;
+  padding: 2rem;
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: 100%;
+  z-index: 2000;
+
+  .modal {
+    background-color: var(--raised);
+    border: 0;
+    max-width: 480px;
+    padding: 2rem;    
+
+    &__controls {
+      align-items: center;
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 2rem;
+
+      span {
+        margin: 0;
+      }
+    }
+  }
+}

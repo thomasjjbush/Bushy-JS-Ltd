@@ -1,0 +1,12 @@
+.text {
+  margin-bottom: 2rem;
+
+  &--clamped {
+    -webkit-box-orient: vertical;
+    /* stylelint-disable-next-line value-no-vendor-prefix */
+    display: -webkit-box;
+    -webkit-line-clamp: 3; 
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}

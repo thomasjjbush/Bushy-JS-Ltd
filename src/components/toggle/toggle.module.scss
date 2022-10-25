@@ -1,0 +1,66 @@
+.container {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 1rem 1rem;
+
+  .info {
+    display: flex;
+
+    span {
+      margin: 0 0.5rem 0 0;
+    }
+  }
+
+  .toggle {
+    display: inline-block;
+    height: 26px;
+    margin-left: 1rem;
+    position: relative;
+    width: 48px;
+  
+    span {
+      background-color: var(--label);
+      border-radius: 26px;
+      bottom: 0;
+      cursor: pointer;
+      left: 0;
+      position: absolute;
+      right: 0;
+      top: 0;
+      transition: background-color 150ms ease-in-out;
+  
+      &::before {
+        background-color: var(--raised);
+        border-radius: inherit;
+        bottom: 2px;
+        content: "";
+        height: 22px;
+        left: 2px;
+        position: inherit;
+        transition: transform 150ms ease-in-out;
+        width: 22px;
+      }
+    }
+  
+    input {
+      height: 0;
+      opacity: 0;
+      width: 0;
+  
+      &:checked + span {
+        background-color: var(--primary);
+  
+        &::before {
+          transform: translateX(22px);
+        }
+      }
+
+      &:focus-visible + span {
+        outline: dashed 2px var(--primary);
+        outline-offset: 2px;
+      }
+    }
+  }
+}
+
