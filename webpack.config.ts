@@ -9,7 +9,7 @@ import type { Configuration as DevConfiguration } from 'webpack-dev-server';
 
 type Modes = 'development' | 'production';
 
-export default (_: unknown, { mode }: { mode: Modes }): Configuration & DevConfiguration => {
+export default (_: Record<string, string>, { mode }: { mode: Modes }): Configuration & DevConfiguration => {
   const isProd = mode === 'production';
 
   return {
@@ -74,7 +74,7 @@ export default (_: unknown, { mode }: { mode: Modes }): Configuration & DevConfi
       }),
       new MiniCssExtractPlugin(),
       new CompressionPlugin(),
-      new DotenvPlugin(),
+      new DotenvPlugin({ path: path.resolve(__dirname, isProd ? '.env.production' : '.env') }),
     ],
     resolve: {
       alias: {
