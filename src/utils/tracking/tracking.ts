@@ -20,7 +20,7 @@ export enum TrackingEvents {
 
 class Tracking {
   constructor() {
-    if (process.env.NODE_ENV !== 'production') {
+    if (process.env.NODE_ENV === 'production') {
       mixpanel.init(process.env.MIXPANEL as string);
     }
   }
@@ -30,7 +30,7 @@ class Tracking {
   };
 
   track = (event: TrackingEvents, data: { [key: string]: unknown; user?: User | null }) => {
-    if (process.env.NODE_ENV !== 'production') {
+    if (process.env.NODE_ENV === 'production') {
       const { user = store.getState().user.user, ...properties } = data;
 
       mixpanel.track(event, {
