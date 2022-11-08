@@ -11,15 +11,16 @@ interface Props {
   icon?: ReactNode;
   label: ReactNode | string;
   onClick?: (e: MouseEvent<HTMLButtonElement>) => void;
+  onTracking?: (e: MouseEvent<HTMLAnchorElement>) => void;
   raised?: boolean;
   to?: string;
 }
 
-export function Button({ className, disabled, icon, label, onClick, raised = false, to }: Props) {
+export function Button({ className, disabled, icon, label, onClick, onTracking, raised = false, to }: Props) {
   const classNames = cx(style.button, className);
 
   const content = to ? (
-    <Link className={classNames} to={to}>
+    <Link className={classNames} to={to} onClick={onTracking}>
       {icon}
       {label}
     </Link>

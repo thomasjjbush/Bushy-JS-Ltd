@@ -13,6 +13,8 @@ import { getEmployment } from '@store/slices/employment/thunks';
 import { selectLocale } from '@store/slices/settings/selectors';
 import { useDispatch } from '@store/store';
 
+import tracking, { TrackingEvents } from '@utils/tracking/tracking';
+
 import style from './employment.module.scss';
 
 export function Employment() {
@@ -41,7 +43,13 @@ export function Employment() {
         {(loading ? new Array(5).fill({}) : employment)?.map(
           ({ endDate, companyName, responsibilities, startDate, title, url }, i) => (
             <div className={cx(style.employment, { [style.employmentLoading]: loading })} key={startDate || i}>
-              <a className={style.employmentLogo} href={url} target="_blank" rel="noreferrer">
+              <a
+                className={style.employmentLogo}
+                href={url}
+                onClick={() => tracking.track(TrackingEvents.CLICK, { label: `Visit ${companyName}` })}
+                target="_blank"
+                rel="noreferrer"
+              >
                 {loading ? (
                   <ThemedImage alt="loading" img="loading-gif.gif" />
                 ) : (
@@ -50,7 +58,13 @@ export function Employment() {
               </a>
               <div>
                 <p className={style.employmentTitle}>{title}</p>
-                <a className={style.employmentName} href={url} target="_blank" rel="noreferrer">
+                <a
+                  className={style.employmentName}
+                  href={url}
+                  onClick={() => tracking.track(TrackingEvents.CLICK, { label: `Visit ${companyName}` })}
+                  target="_blank"
+                  rel="noreferrer"
+                >
                   {companyName}
                 </a>
                 <p className={style.employmentResponsibilities}>{responsibilities}</p>

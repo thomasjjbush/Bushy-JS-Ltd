@@ -19,6 +19,7 @@ import { SignIn } from '@modules/sign-in/sign-in';
 import { Icons } from '@types';
 
 import { scrollToAnchor } from '@utils/scroll-to-anchor/scroll-to-anchor';
+import tracking, { TrackingEvents } from '@utils/tracking/tracking';
 
 import style from './nav.module.scss';
 
@@ -43,6 +44,8 @@ export default function Nav() {
       }
       navigate(to);
     }, 200);
+
+    tracking.track(TrackingEvents.CLICK, { label: `Navigate to ${to.replace('/#', '')}` });
   };
 
   return (

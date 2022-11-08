@@ -9,6 +9,7 @@ import { Translation } from '@components/translation/translation';
 import { Icons } from '@types';
 
 import { scrollToAnchor } from '@utils/scroll-to-anchor/scroll-to-anchor';
+import tracking, { TrackingEvents } from '@utils/tracking/tracking';
 
 import style from './skills.module.scss';
 
@@ -19,9 +20,11 @@ const skills = [
 ];
 
 export function Skills() {
-  const onClick = () => {
+  const onClick = (skill: string) => {
     scrollToAnchor('projects');
     window.location.hash = '#projects';
+
+    tracking.track(TrackingEvents.CLICK, { label: `See ${skill} examples` });
   };
 
   return (
@@ -42,7 +45,7 @@ export function Skills() {
             <Button
               icon={<Icon icon={Icons.PROJECTS} primary size="S" />}
               label={<Translation id="skills.cta" />}
-              onClick={onClick}
+              onClick={() => onClick(skill)}
             />
           </div>
         </div>

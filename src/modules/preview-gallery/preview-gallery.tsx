@@ -4,15 +4,18 @@ import cx from 'classnames';
 import { ContentfulImage } from '@components/contentful-image/contentful-image';
 import { Icon } from '@components/icon/icon';
 
+import tracking, { TrackingEvents } from '@utils/tracking/tracking';
+
 import { Asset, Icons } from '@types';
 
 import style from './preview-gallery.module.scss';
 
 interface Props {
   gallery: Asset[];
+  slug: string;
 }
 
-export function PreviewGallery({ gallery }: Props) {
+export function PreviewGallery({ gallery, slug }: Props) {
   const ref = useRef<HTMLDivElement>(null);
 
   const [index, setIndex] = useState(1);
@@ -23,6 +26,8 @@ export function PreviewGallery({ gallery }: Props) {
       pauseVideo(ref.current);
     }
     setIndex(index + 1);
+
+    tracking.track(TrackingEvents.CLICK, { label: 'Increment gallery', project: slug });
   };
 
   const decrement = () => {
@@ -31,6 +36,8 @@ export function PreviewGallery({ gallery }: Props) {
       pauseVideo(ref.current);
     }
     setIndex(index - 1);
+
+    tracking.track(TrackingEvents.CLICK, { label: 'Decrement gallery', project: slug });
   };
 
   const jump = (index: number) => {
@@ -39,6 +46,7 @@ export function PreviewGallery({ gallery }: Props) {
       pauseVideo(ref.current);
     }
     setIndex(index);
+    tracking.track(TrackingEvents.CLICK, { label: 'Gallery jump', project: slug });
   };
 
   const pauseVideo = (ref: HTMLDivElement) => {
@@ -78,7 +86,11 @@ export function PreviewGallery({ gallery }: Props) {
             {[gallery[gallery.length - 1], ...gallery, gallery[0]].map(({ url, title }, i) => (
               <li className={style.previewGalleryItem} key={i + url}>
                 {url.includes('.mp4') ? (
-                  <video src={url} controls={true} />
+                  <video
+                    src={url}
+                    controls={true}
+                    onPlay={() => tracking.track(TrackingEvents.WATCH_VIDEO, { project: slug })}
+                  />
                 ) : (
                   <ContentfulImage alt={title} src={url} width={700} />
                 )}

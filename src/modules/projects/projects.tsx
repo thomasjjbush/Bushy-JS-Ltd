@@ -19,6 +19,8 @@ import { getMoreProjects, getProjects } from '@store/slices/projects/thunks';
 import { selectLocale } from '@store/slices/settings/selectors';
 import { useDispatch } from '@store/store';
 
+import tracking, { TrackingEvents } from '@utils/tracking/tracking';
+
 import { Icons, Project } from '@types';
 
 import style from './projects.module.scss';
@@ -78,7 +80,11 @@ export function Projects() {
                   <h3>{name}</h3>
                   <p>{description}</p>
                   <div className={style.projectInteractions}>
-                    <Button label={<Translation id="projects.project.cta" />} to={`/project/${slug}`} />
+                    <Button
+                      label={<Translation id="projects.project.cta" />}
+                      to={`/project/${slug}`}
+                      onTracking={() => tracking.track(TrackingEvents.CLICK, { label: `Read more about ${name}` })}
+                    />
                     <div className={style.projectInteractionsStats}>
                       <div>
                         <Icon icon={Icons.COMMENT} primary size="S" />

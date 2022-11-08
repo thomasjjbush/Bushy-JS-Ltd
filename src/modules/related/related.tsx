@@ -13,13 +13,20 @@ import { selectRelated } from '@store/slices/project/selectors';
 import { getRelatedProjects } from '@store/slices/project/thunks';
 import { useDispatch } from '@store/store';
 
+import tracking, { TrackingEvents } from '@utils/tracking/tracking';
+
 import { Project } from '@types';
 
 import style from './related.module.scss';
 
-function renderRelated(related: Project[]) {
+function renderRelated(related: Project[], currentSlug: string) {
   return related.map(({ name, slug }) => (
-    <Link className={style.relatedItem} key={slug} to={`/project/${slug}`}>
+    <Link
+      className={style.relatedItem}
+      key={slug}
+      to={`/project/${slug}`}
+      onClick={() => tracking.track(TrackingEvents.CLICK, { label: `Visit related ${slug}`, project: currentSlug })}
+    >
       {name}
     </Link>
   ));
@@ -45,13 +52,13 @@ export function RelatedProjects({ project }: Props) {
         {Boolean(sameTag.length) && (
           <div>
             <h3>Other projects using {project.primaryTag.name}</h3>
-            {renderRelated(sameTag)}
+            {renderRelated(sameTag, project.slug)}
           </div>
         )}
         {Boolean(sameClient.length) && (
           <div>
             <h3>Other projects for {project.client.name}</h3>
-            {renderRelated(sameClient)}
+            {renderRelated(sameClient, project.slug)}
           </div>
         )}
         <div>

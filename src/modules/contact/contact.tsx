@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import cx from 'classnames';
 
+import { social } from '@const/social';
+
 import { Angle } from '@components/angle/angle';
 import { Button } from '@components/button/button';
 import { Icon } from '@components/icon/icon';
@@ -14,10 +16,11 @@ import api from '@services/api';
 import { selectSettings } from '@store/slices/settings/selectors';
 import { selectUser } from '@store/slices/user/selectors';
 
+import tracking, { TrackingEvents } from '@utils/tracking/tracking';
+
 import { Endpoints, Icons } from '@types';
 
 import style from './contact.module.scss';
-import { social } from '@const/social';
 
 type OpportunityTypes = 'Contract' | 'Full time';
 type OpportunityLengths = '1 month' | '3 months' | '6 months' | '12 months';
@@ -59,6 +62,8 @@ export function Contact() {
       } finally {
         setLoading(false);
         setMessage('');
+
+        tracking.track(TrackingEvents.CONTACT, { type: opportunityType });
       }
     }
   };
@@ -172,8 +177,15 @@ export function Contact() {
         onClick={onSubmit}
       />
       <div className={style.social}>
-        {social.map(({ icon, url }) => (
-          <a className={style.socialLink} href={url} key={url} target="_blank" rel="noreferrer">
+        {social.map(({ icon, name, url }) => (
+          <a
+            className={style.socialLink}
+            href={url}
+            key={url}
+            onClick={() => tracking.track(TrackingEvents.CLICK, { label: `Visit ${name}` })}
+            target="_blank"
+            rel="noreferrer"
+          >
             <Icon icon={icon} />
           </a>
         ))}

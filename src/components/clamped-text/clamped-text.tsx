@@ -9,9 +9,10 @@ import { Translation } from '@components/translation/translation';
 interface Props {
   children: string;
   className?: string;
+  onClick?: () => void;
 }
 
-export function ClampedText({ className, children }: Props) {
+export function ClampedText({ className, children, onClick }: Props) {
   const [clamped, setClamped] = useState(true);
 
   return (
@@ -19,7 +20,10 @@ export function ClampedText({ className, children }: Props) {
       <p className={cx(style.text, { [style.textClamped]: clamped })}>{children}</p>
       <Button
         label={<Translation id={clamped ? 'project.responsibilities.readMore' : 'project.responsibilities.readLess'} />}
-        onClick={() => setClamped(!clamped)}
+        onClick={() => {
+          onClick?.();
+          setClamped(!clamped);
+        }}
       />
     </div>
   );

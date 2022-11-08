@@ -22,6 +22,8 @@ import { actions } from '@store/slices/project/slice';
 import { selectLocale } from '@store/slices/settings/selectors';
 import { useDispatch } from '@store/store';
 
+import tracking, { TrackingEvents } from '@utils/tracking/tracking';
+
 import style from './project.module.scss';
 
 export default function Project() {
@@ -72,13 +74,20 @@ export default function Project() {
             <article className={style.projectResponsibility} key={name}>
               <Icon className={style.projectResponsibilityIcon} icon={icon} size="XL" />
               <h3 className={style.projectResponsibilityName}>{name}</h3>
-              <ClampedText className={style.projectResponsibilityDescription}>{description}</ClampedText>
+              <ClampedText
+                className={style.projectResponsibilityDescription}
+                onClick={() =>
+                  tracking.track(TrackingEvents.CLICK, { label: `Read more about ${name}`, project: project.slug })
+                }
+              >
+                {description}
+              </ClampedText>
             </article>
           ))}
         </div>
       </section>
       {Boolean(project.gallery?.length) && (
-        <PreviewGallery gallery={[project.video, ...project.gallery].filter(Boolean)} />
+        <PreviewGallery gallery={[project.video, ...project.gallery].filter(Boolean)} slug={project.slug} />
       )}
       <Comments slug={slug as string} />
       <RelatedProjects project={project} />
