@@ -26,7 +26,9 @@ class Tracking {
   }
 
   identify = (id: string) => {
-    mixpanel.identify(id);
+    if (process.env.NODE_ENV === 'production') {
+      mixpanel.identify(id);
+    }
   };
 
   track = (event: TrackingEvents, data: { [key: string]: unknown; user?: User | null }) => {
