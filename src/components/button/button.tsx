@@ -13,10 +13,21 @@ interface Props {
   onClick?: (e: MouseEvent<HTMLButtonElement>) => void;
   onTracking?: (e: MouseEvent<HTMLAnchorElement>) => void;
   raised?: boolean;
+  rootClassName?: string;
   to?: string;
 }
 
-export function Button({ className, disabled, icon, label, onClick, onTracking, raised = false, to }: Props) {
+export function Button({
+  className,
+  disabled,
+  icon,
+  label,
+  onClick,
+  onTracking,
+  raised = false,
+  rootClassName,
+  to,
+}: Props) {
   const classNames = cx(style.button, className);
 
   const content = to ? (
@@ -32,7 +43,7 @@ export function Button({ className, disabled, icon, label, onClick, onTracking, 
   );
 
   return (
-    <Angle className={cx({ [style.buttonDisabled]: disabled })} border raised={raised}>
+    <Angle className={cx(rootClassName, { [style.buttonDisabled]: disabled })} border raised={raised}>
       {content}
     </Angle>
   );
