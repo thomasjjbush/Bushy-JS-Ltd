@@ -8,6 +8,8 @@ import { Translation } from '@components/translation/translation';
 
 import { useLazyEffect } from '@hooks/use-lazy-effect/use-lazy-effect';
 
+import { Error } from '@modules/error/error';
+
 import { selectEmployment } from '@store/slices/employment/selectors';
 import { getEmployment } from '@store/slices/employment/thunks';
 import { selectLocale } from '@store/slices/settings/selectors';
@@ -27,10 +29,6 @@ export function Employment() {
     dependancies: [locale],
   });
 
-  if (error) {
-    return <h1>error</h1>;
-  }
-
   return (
     <section className={style.container} id="employment">
       <div>
@@ -40,6 +38,9 @@ export function Employment() {
           </span>
           <span className={style.titleWire} />
         </h2>
+        {!loading && error && (
+          <Error message={error.message} onRetry={() => dispatch(getEmployment())} status={error.status} />
+        )}
         {(loading ? new Array(5).fill({}) : employment)?.map(
           ({ endDate, companyName, responsibilities, startDate, title, url }, i) => (
             <div className={cx(style.employment, { [style.employmentLoading]: loading })} key={startDate || i}>
