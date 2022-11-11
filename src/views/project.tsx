@@ -13,6 +13,7 @@ import { Translation } from '@components/translation/translation';
 import { useEvents } from '@hooks/use-events/use-events';
 
 import { Comments } from '@modules/comments/comments';
+import { Error } from '@modules/error/error';
 import { PreviewGallery } from '@modules/preview-gallery/preview-gallery';
 import { RelatedProjects } from '@modules/related/related';
 
@@ -30,7 +31,7 @@ export default function Project() {
   const dispatch = useDispatch();
   const { slug } = useParams<{ slug: string }>();
 
-  const { loading, project } = useSelector(selectProject, isEqual);
+  const { error, loading, project } = useSelector(selectProject, isEqual);
   const locale = useSelector(selectLocale);
 
   useEffect(() => {
@@ -46,51 +47,66 @@ export default function Project() {
     deleteLike: actions.deleteLikeEvent,
   });
 
-  if (loading || !project) {
+  if (loading) {
     return <p>loading</p>;
   }
 
-  return (
-    <main className={style.project}>
-      <section>
-        <h2 className={style.projectName}>{project.name}</h2>
-        <Client className={style.projectClient} client={project.client} />
-        <Likes className={style.projectLikes} slug={slug as string} />
-        <div className={style.projectTags}>
-          {project.tags.map(({ name, slug }) => (
-            <Angle border className={style.projectTagsTag} key={slug}>
-              <p>{name}</p>
-            </Angle>
-          ))}
-        </div>
-        <p className={style.projectDescription}>{project.description}</p>
-      </section>
-      <section>
-        <h2 className={style.projectResponsibilitiesTitle}>
-          <Translation id="project.responsibilities.title" />
-        </h2>
-        <div className={style.projectResponsibilities}>
-          {project.responsibilities.map(({ description, icon, name }) => (
-            <article className={style.projectResponsibility} key={name}>
-              <Icon className={style.projectResponsibilityIcon} icon={icon} size="XL" />
-              <h3 className={style.projectResponsibilityName}>{name}</h3>
-              <ClampedText
-                className={style.projectResponsibilityDescription}
-                onClick={() =>
-                  tracking.track(TrackingEvents.CLICK, { label: `Read more about ${name}`, project: project.slug })
-                }
-              >
-                {description}
-              </ClampedText>
-            </article>
-          ))}
-        </div>
-      </section>
-      {Boolean(project.gallery?.length) && (
-        <PreviewGallery gallery={[project.video, ...project.gallery].filter(Boolean)} slug={project.slug} />
-      )}
-      <Comments slug={slug as string} />
-      <RelatedProjects project={project} />
-    </main>
-  );
+  if (error) {
+    return (
+      <Error
+        fullSize
+        message={error.message}
+        status={error.status}
+        onRetry={() => dispatch(getProject(slug as string))}
+      />
+    );
+  }
+
+  if (project) {
+    return (
+      <main className={style.project}>
+        <section>
+          <h2 className={style.projectName}>{project.name}</h2>
+          <Client className={style.projectClient} client={project.client} />
+          <Likes className={style.projectLikes} slug={slug as string} />
+          <div className={style.projectTags}>
+            {project.tags.map(({ name, slug }) => (
+              <Angle border className={style.projectTagsTag} key={slug}>
+                <p>{name}</p>
+              </Angle>
+            ))}
+          </div>
+          <p className={style.projectDescription}>{project.description}</p>
+        </section>
+        <section>
+          <h2 className={style.projectResponsibilitiesTitle}>
+            <Translation id="project.responsibilities.title" />
+          </h2>
+          <div className={style.projectResponsibilities}>
+            {project.responsibilities.map(({ description, icon, name }) => (
+              <article className={style.projectResponsibility} key={name}>
+                <Icon className={style.projectResponsibilityIcon} icon={icon} size="XL" />
+                <h3 className={style.projectResponsibilityName}>{name}</h3>
+                <ClampedText
+                  className={style.projectResponsibilityDescription}
+                  onClick={() =>
+                    tracking.track(TrackingEvents.CLICK, { label: `Read more about ${name}`, project: project.slug })
+                  }
+                >
+                  {description}
+                </ClampedText>
+              </article>
+            ))}
+          </div>
+        </section>
+        {Boolean(project.gallery?.length) && (
+          <PreviewGallery gallery={[project.video, ...project.gallery].filter(Boolean)} slug={project.slug} />
+        )}
+        <Comments slug={slug as string} />
+        <RelatedProjects project={project} />
+      </main>
+    );
+  }
+
+  return null;
 }
