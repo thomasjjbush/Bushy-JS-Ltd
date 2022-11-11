@@ -1,0 +1,25 @@
+.error {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  &__status,
+  &__message {
+    margin-bottom: 1rem;
+  }
+
+  &__status {
+    font-size: 2rem;
+  }
+
+  img {
+    display: block;
+    max-width: 600px;
+    width: 90%;
+  }
+
+  &--full-size {
+    min-height: 100vh;
+  }
+}
