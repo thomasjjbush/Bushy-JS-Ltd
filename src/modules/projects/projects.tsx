@@ -8,7 +8,7 @@ import { Client } from '@components/client/client';
 import { ContentfulImage } from '@components/contentful-image/contentful-image';
 import { Icon } from '@components/icon/icon';
 import { ThemedImage } from '@components/themed-image/themed-image';
-import { Translation } from '@components/translation/translation';
+import { Translation, useTranslation } from '@components/translation/translation';
 
 import { useLazyEffect } from '@hooks/use-lazy-effect/use-lazy-effect';
 
@@ -47,10 +47,8 @@ export function Projects() {
   useLazyEffect('projects', () => dispatch(getProjects()), {
     dependancies: [locale],
   });
-  useLazyEffect('more-projects', () => dispatch(getMoreProjects()), {
-    condition: projects.length !== total,
-    dependancies: [projects?.length],
-  });
+
+  const viewMoreLabel = useTranslation('projects.viewMore');
 
   let test: Project[] = loading ? new Array(6).fill({}) : projects || [];
   if (loadingMore) {
@@ -104,7 +102,13 @@ export function Projects() {
               </Angle>
             </article>
           ))}
-          <span id="more-projects" />
+          {!error && projects.length && projects.length < total && (
+            <Button
+              label={viewMoreLabel}
+              onClick={() => dispatch(getMoreProjects())}
+              rootClassName={style.projectsLoadMore}
+            />
+          )}
         </div>
       </div>
     </section>

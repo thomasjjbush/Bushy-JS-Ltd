@@ -15,6 +15,11 @@
       grid-template-columns: repeat(3, 1fr);
       margin-top: 2rem;
       padding-bottom: 4rem;
+
+      &__load-more {
+        justify-self: left;
+        min-width: 0;
+      }
   
       .project {
         background-color: var(--background);
