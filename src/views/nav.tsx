@@ -65,6 +65,10 @@ export default function Nav() {
             <Translation id={label as 'nav.routes.skills' | 'nav.routes.employment' | 'nav.routes.projects'} />
           </NavLink>
         ))}
+        <a className={style.navItem} href="/pdf/cv.pdf" target="_blank">
+          <Icon icon={Icons.CV} />
+          <Translation id="nav.cv" />
+        </a>
       </div>
       <div>
         <Settings />

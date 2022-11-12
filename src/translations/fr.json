@@ -13,6 +13,7 @@
   "error.message": "On dirait que quelque chose s'est mal passé. Désolé pour le dérangement!",
   "error.retry": "Recommencez",
   "error.title": "Erreur inconnue",
+  "nav.cv": "Mon CV",
   "nav.routes.contact": "Contactez",
   "nav.routes.employment": "Emploi",
   "nav.routes.projects": "Projets",

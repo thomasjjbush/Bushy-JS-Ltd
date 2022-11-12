@@ -13,6 +13,7 @@
   "error.message": "Looks like something has gone wrong. Sorry for the inconvenience!",
   "error.retry": "Retry",
   "error.title": "Unknown error",
+  "nav.cv": "My CV",
   "nav.routes.contact": "Contact",
   "nav.routes.employment": "Employment",
   "nav.routes.projects": "Projects",

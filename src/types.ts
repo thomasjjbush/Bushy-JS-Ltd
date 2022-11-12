@@ -63,6 +63,7 @@ export enum Icons {
   COMMENT = 'iconComment',
   CONTACT = 'iconContact',
   CONTACT_SUBMIT = 'iconContactSubmit',
+  CV = 'iconCv',
   DARK_MODE = 'iconDarkMode',
   DELETE = 'iconDelete',
   DESIGN = 'iconDesign',

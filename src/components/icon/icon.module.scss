@@ -12,6 +12,10 @@
   speak: never;
   text-transform: none;
 
+  &--cv::before {
+    content: "\e91f";
+  }
+
   &--contact-submit::before {
     content: "\e91d";
   }
