@@ -13,16 +13,17 @@ export const getMoreProjects = createAsyncThunk('projects/getMore', (_, { getSta
   }),
 );
 
-export const getProjects = createAsyncThunk<{ projects: Project[]; total: number }, void, { rejectValue: Rejected }>(
-  'projects/get',
-  async (_, { getState, rejectWithValue }) => {
-    try {
-      const res = await api.get<{ projects: Project[]; total: number }>(Endpoints.GET_PROJECTS, {
-        queries: { locale: (getState() as Store).settings.locale },
-      });
-      return res;
-    } catch (e) {
-      return rejectWithValue({ message: (e as ServiceError).message, status: (e as ServiceError).status });
-    }
-  },
-);
+export const getProjects = createAsyncThunk<
+  { projects: Project[]; total: number },
+  string | undefined,
+  { rejectValue: Rejected }
+>('projects/get', async (searchTerm, { getState, rejectWithValue }) => {
+  try {
+    const res = await api.get<{ projects: Project[]; total: number }>(Endpoints.GET_PROJECTS, {
+      queries: { locale: (getState() as Store).settings.locale, searchTerm: searchTerm || '' },
+    });
+    return res;
+  } catch (e) {
+    return rejectWithValue({ message: (e as ServiceError).message, status: (e as ServiceError).status });
+  }
+});
