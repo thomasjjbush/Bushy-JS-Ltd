@@ -1,6 +1,6 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import * as actions from '@store/slices/projects/thunks';
+import * as thunkActions from '@store/slices/projects/thunks';
 
 import type { Project, Rejected } from '@types';
 
@@ -19,35 +19,45 @@ const initialState: State = {
   total: 0,
 };
 
-const { reducer } = createSlice({
+const { actions, reducer } = createSlice({
   extraReducers: (builder) => {
-    builder.addCase(actions.getProjects.pending, (state) => {
+    builder.addCase(thunkActions.getProjects.pending, (state) => {
       state.loading = true;
     });
-    builder.addCase(actions.getProjects.rejected, (state, action) => {
+    builder.addCase(thunkActions.getProjects.rejected, (state, action) => {
       state.loading = false;
       state.error = action.payload;
     });
-    builder.addCase(actions.getProjects.fulfilled, (state, action) => {
+    builder.addCase(thunkActions.getProjects.fulfilled, (state, action) => {
       state.error = false;
       state.loading = false;
       state.projects = action.payload.projects;
       state.total = action.payload.total;
     });
-    builder.addCase(actions.getMoreProjects.pending, (state) => {
+    builder.addCase(thunkActions.getMoreProjects.pending, (state) => {
       state.loadingMore = true;
     });
-    builder.addCase(actions.getMoreProjects.rejected, (state) => {
+    builder.addCase(thunkActions.getMoreProjects.rejected, (state) => {
       state.loadingMore = false;
     });
-    builder.addCase(actions.getMoreProjects.fulfilled, (state, action) => {
+    builder.addCase(thunkActions.getMoreProjects.fulfilled, (state, action) => {
       state.loadingMore = false;
       state.projects = [...(state.projects as Project[]), ...action.payload.projects];
     });
   },
   initialState,
   name: 'projects',
-  reducers: {},
+  reducers: {
+    like(state, action: PayloadAction<{ slug: string }>) {
+      const projectIndex = state.projects?.findIndex((project) => project.slug === action.payload.slug) ?? -1;
+      const project = state.projects?.[projectIndex];
+      if (project) {
+        project.likeCount += project.hasLiked ? -1 : 1;
+        project.hasLiked = !project.hasLiked;
+      }
+    },
+  },
 });
 
+export { actions };
 export default reducer;
