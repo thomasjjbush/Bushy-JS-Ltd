@@ -18,6 +18,7 @@ import { useDispatch } from '@store/store';
 import tracking, { TrackingEvents } from '@utils/tracking/tracking';
 
 import style from './employment.module.scss';
+import { ClampedText } from '@components/clamped-text/clamped-text';
 
 export function Employment() {
   const dispatch = useDispatch();
@@ -68,7 +69,7 @@ export function Employment() {
                 >
                   {companyName}
                 </a>
-                <p className={style.employmentResponsibilities}>{responsibilities}</p>
+                <ClampedText asLink>{responsibilities}</ClampedText>
                 {startDate && (
                   <p className={style.employmentTime}>
                     {dateFormat(startDate, 'mmmm yyyy')} - {endDate ? dateFormat(endDate, 'mmmm yyyy') : 'Present'}
