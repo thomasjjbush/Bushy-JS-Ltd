@@ -24,7 +24,7 @@ export function useEvents(actions: Actions) {
 
     eventStream.onmessage = function onMessage({ data }: MessageEvent) {
       const { payload, type } = JSON.parse(data);
-      dispatch(actions[type as 'addComment' | 'addLike' | 'deleteComment' | 'deleteLike'](payload));
+      dispatch(actions[type as keyof Actions](payload));
     };
 
     return () => eventStream.close();
