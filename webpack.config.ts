@@ -38,7 +38,7 @@ export default (_: Record<string, string>, { mode }: { mode: Modes }): Configura
           use: [
             MiniCssExtractPlugin.loader,
             { loader: 'css-loader', options: { sourceMap: !isProd } },
-            { loader: 'sass-loader', options: { sourceMap: !isProd } },
+            { loader: 'sass-loader', options: { implementation: require('sass'), sourceMap: !isProd } },
           ],
         },
         {
@@ -46,7 +46,7 @@ export default (_: Record<string, string>, { mode }: { mode: Modes }): Configura
           use: [
             MiniCssExtractPlugin.loader,
             { loader: 'css-loader', options: { modules: { exportLocalsConvention: 'camelCase' }, sourceMap: !isProd } },
-            { loader: 'sass-loader', options: { sourceMap: !isProd } },
+            { loader: 'sass-loader', options: { implementation: require('sass'), sourceMap: !isProd } },
           ],
         },
         { test: /\.woff2$/, use: 'url-loader?limit=100000' },
