@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import cx from 'classnames';
 
@@ -14,11 +15,15 @@ import { useLazyEffect } from '@hooks/use-lazy-effect/use-lazy-effect';
 
 import { ProjectFilter } from '@modules/project-filter/project-filter';
 
+import { addLike, deletelLike } from '@store/slices/project/thunks';
+import { selectUser } from '@store/slices/user/selectors';
+import { actions } from '@store/slices/projects/slice';
 import { selectProjects } from '@store/slices/projects/selectors';
 import { getMoreProjects, getProjects } from '@store/slices/projects/thunks';
 import { selectLocale } from '@store/slices/settings/selectors';
 import { useDispatch } from '@store/store';
 
+import { signInWithState } from '@utils/sign-in-with-state';
 import tracking, { TrackingEvents } from '@utils/tracking/tracking';
 
 import { Icons, Project } from '@types';
@@ -39,10 +44,12 @@ function predictWidth() {
 }
 
 export function Projects() {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const locale = useSelector(selectLocale);
   const { error, loading, loadingMore, projects = [], total } = useSelector(selectProjects);
+  const user = useSelector(selectUser);
 
   useLazyEffect('projects', () => dispatch(getProjects()), {
     dependancies: [locale],
@@ -85,13 +92,38 @@ export function Projects() {
                     />
                     <div className={style.projectInteractionsStats}>
                       <div>
-                        <Icon icon={Icons.COMMENT} primary size="S" />
+                        <button
+                          onClick={() => {
+                            if (user?._id) {
+                              navigate(`project/${slug}?commenting=true`);
+                            } else {
+                              signInWithState({ action: 'comment', comment: '', slug });
+                            }
+                          }}
+                        >
+                          <Icon icon={Icons.COMMENT} primary size="S" />
+                        </button>
                         <p>
                           {commentCount} <Translation id="projects.project.comments" />
                         </p>
                       </div>
                       <div>
-                        <Icon icon={hasLiked ? Icons.LIKED : Icons.LIKE} primary size="S" />
+                        <button
+                          onClick={async () => {
+                            if (user?._id) {
+                              if (hasLiked) {
+                                await dispatch(deletelLike({ slug, userId: user._id }));
+                              } else {
+                                await dispatch(addLike(slug));
+                              }
+                              dispatch(actions.like({ slug }));
+                            } else {
+                              signInWithState({ action: 'like', slug });
+                            }
+                          }}
+                        >
+                          <Icon icon={hasLiked ? Icons.LIKED : Icons.LIKE} primary size="S" />
+                        </button>
                         <p>
                           {likeCount} <Translation id="projects.project.likes" />
                         </p>
