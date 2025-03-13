@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 import cx from 'classnames';
 
 import { Angle } from '@components/angle/angle';
@@ -14,9 +14,10 @@ import { useDispatch } from '@store/store';
 
 import { uuid } from '@utils/uuid/uuid';
 
-import { Endpoints, Icons } from '@types';
+import { Icons } from '@types';
 
 import style from './draft-comment.module.scss';
+import { signInWithState } from '@utils/sign-in-with-state';
 
 interface Props {
   className?: string;
@@ -25,6 +26,7 @@ interface Props {
 export function DraftComment({ className }: Props) {
   const dispatch = useDispatch();
   const { slug } = useParams();
+  const [searchParams] = useSearchParams();
 
   const placeholder = useTranslation('project.comments.placeholder');
 
@@ -34,7 +36,7 @@ export function DraftComment({ className }: Props) {
 
   const onClick = () => {
     if (!user) {
-      return (window.location.href = window.location.href = process.env.API_DOMAIN + Endpoints.SIGN_IN);
+      signInWithState({ action: 'comment', comment, slug: slug || '' });
     } else if (comment && slug) {
       dispatch(addComment({ _id: uuid(), comment, slug }));
       setComment('');
@@ -45,6 +47,7 @@ export function DraftComment({ className }: Props) {
     <div className={cx(style.container, className)}>
       <Angle className={style.angle}>
         <textarea
+          autoFocus={searchParams.has('commenting')}
           className={style.textArea}
           onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setComment(e.target.value)}
           value={comment}
