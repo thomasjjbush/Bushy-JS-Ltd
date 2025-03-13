@@ -1,5 +1,10 @@
 .text {
   margin-bottom: 2rem;
+  white-space: pre-wrap;
+
+  &--as-link {
+    margin-bottom: 0.5rem;
+  }
 
   &--clamped {
     -webkit-box-orient: vertical;
@@ -8,5 +13,10 @@
     -webkit-line-clamp: 3; 
     overflow: hidden;
     text-overflow: ellipsis;
+  }
+
+  &__link {
+    color: var(--primary);
+    text-decoration: underline;
   }
 }
