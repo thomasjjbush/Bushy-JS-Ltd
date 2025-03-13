@@ -13,6 +13,8 @@ import { useDispatch } from '@store/store';
 import { Icons } from '@types';
 
 import style from './likes.module.scss';
+import { signInWithState } from '@utils/sign-in-with-state';
+import { Tooltip } from 'react-tooltip';
 
 interface Props {
   className?: string;
@@ -43,17 +45,14 @@ export function Likes({ className, slug }: Props) {
         return dispatch(deletelLike({ slug, userId: user._id }));
       }
       dispatch(addLike(slug));
+    } else {
+      signInWithState({ action: 'like', fromProjectPage: '1', slug });
     }
   };
 
   return (
     <div className={cx(style.like, className)}>
-      <button
-        className={cx(style.likeButton, { [style.likeButtonDisabled]: !user })}
-        disabled={!user}
-        onClick={onClick}
-        title="Like"
-      >
+      <button className={style.likeButton} onClick={onClick} title="Like">
         <Icon
           className={cx(style.likeButtonFill, { [style.likeButtonFillFilled]: hasLiked })}
           icon={Icons.LIKED}
@@ -67,7 +66,19 @@ export function Likes({ className, slug }: Props) {
         />
       </button>
       {Boolean(likeCount) && Boolean(likes.length) ? (
-        <p>{writeLabel({ name: hasLiked ? 'you' : likes[0].author.name, remaining: likeCount - 1 })}</p>
+        <>
+          <p id="likes">{writeLabel({ name: hasLiked ? 'you' : likes[0].author.name, remaining: likeCount - 1 })}</p>
+          <Tooltip anchorSelect="#likes">
+            <div>
+              <p>Liked by:</p>
+              <ul>
+                {likes.map(({ _id, author }) => (
+                  <li key={_id}>{author.name}</li>
+                ))}
+              </ul>
+            </div>
+          </Tooltip>
+        </>
       ) : (
         <p>
           <Translation id="project.likes.empty" />
