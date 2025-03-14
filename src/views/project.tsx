@@ -37,6 +37,7 @@ export default function Project() {
   const locale = useSelector(selectLocale);
 
   useEffect(() => {
+    window.scrollY = 0;
     if (slug) {
       dispatch(getProject(slug));
     }
