@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import isEqual from 'lodash.isequal';
+import throttle from 'lodash.throttle';
 
 import { Angle } from '@components/angle/angle';
 import { ClampedText } from '@components/clamped-text/clamped-text';
@@ -26,6 +27,7 @@ import { useDispatch } from '@store/store';
 import tracking, { TrackingEvents } from '@utils/tracking/tracking';
 
 import style from './project.module.scss';
+import { Project } from '@types';
 
 export default function Project() {
   const dispatch = useDispatch();
@@ -63,50 +65,97 @@ export default function Project() {
   }
 
   if (project) {
-    return (
-      <main className={style.project}>
-        <section>
-          <h2 className={style.projectName}>{project.name}</h2>
-          <Client className={style.projectClient} client={project.client} />
-          <Likes className={style.projectLikes} slug={slug as string} />
-          <div className={style.projectTags}>
-            {project.tags.map(({ name, slug }) => (
-              <Angle border className={style.projectTagsTag} key={slug}>
-                <p>{name}</p>
-              </Angle>
-            ))}
-          </div>
-          <p className={style.projectDescription}>{project.description}</p>
-        </section>
-        <section>
-          <h2 className={style.projectResponsibilitiesTitle}>
-            <Translation id="project.responsibilities.title" />
-          </h2>
-          <div className={style.projectResponsibilities}>
-            {project.responsibilities.map(({ description, icon, name }) => (
-              <article className={style.projectResponsibility} key={name}>
-                <Icon className={style.projectResponsibilityIcon} icon={icon} size="XL" />
-                <h3 className={style.projectResponsibilityName}>{name}</h3>
-                <ClampedText
-                  className={style.projectResponsibilityDescription}
-                  onClick={() =>
-                    tracking.track(TrackingEvents.CLICK, { label: `Read more about ${name}`, project: project.slug })
-                  }
-                >
-                  {description}
-                </ClampedText>
-              </article>
-            ))}
-          </div>
-        </section>
-        {Boolean(project.gallery?.length) && (
-          <PreviewGallery gallery={[project.video, ...project.gallery].filter(Boolean)} slug={project.slug} />
-        )}
-        <Comments slug={slug as string} />
-        <RelatedProjects project={project} />
-      </main>
-    );
+    return <ProjectUI project={project} slug={slug} />;
   }
 
   return null;
+}
+
+function ProjectUI({ project, slug }: { project: Project; slug?: string }) {
+  const heroRef = useRef<HTMLElement | null>(null);
+  const [heroRendered, setHeroRendered] = useState(false);
+
+  useEffect(() => {
+    if (heroRendered && heroRef.current && !/Mobi|Android|Tablet|iPad/i.test(navigator.userAgent)) {
+      const hero = heroRef.current as HTMLElement;
+      const angle = hero.nextSibling as HTMLElement;
+
+      const onScroll = throttle(() => {
+        if (window.scrollY > 50) {
+          hero.style.filter = `blur(${(window.scrollY / 15).toFixed(1)}px)`;
+          angle.style.borderWidth = `${140 + window.scrollY / 1.5}px 0 0 100vw`;
+        } else {
+          hero.style.filter = 'blur(0px)';
+          angle.style.borderWidth = '140px 0 0 100vw';
+        }
+      }, 100);
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            window.addEventListener('scroll', onScroll);
+          } else {
+            window.removeEventListener('scroll', onScroll);
+          }
+        });
+      });
+      observer.observe(hero);
+    }
+  }, [heroRendered, slug]);
+
+  return (
+    <main className={style.project}>
+      <section className={style.projectHero}>
+        <div
+          className={style.projectHeroImage}
+          id={project.name}
+          ref={(elem) => {
+            heroRef.current = elem;
+            setHeroRendered(true);
+          }}
+          style={{ backgroundImage: `url(${project.hero.url})` }}
+        />
+        <div className={style.projectHeroAngle} />
+      </section>
+      <section className={style.projectOverview}>
+        <h2 className={style.projectName}>{project.name}</h2>
+        <Client className={style.projectClient} client={project.client} />
+        <Likes className={style.projectLikes} slug={slug as string} />
+        <div className={style.projectTags}>
+          {project.tags.map(({ name, slug }) => (
+            <Angle border className={style.projectTagsTag} key={slug}>
+              <p>{name}</p>
+            </Angle>
+          ))}
+        </div>
+        <p className={style.projectDescription}>{project.description}</p>
+      </section>
+      <section>
+        <h2 className={style.projectResponsibilitiesTitle}>
+          <Translation id="project.responsibilities.title" />
+        </h2>
+        <div className={style.projectResponsibilities}>
+          {project.responsibilities.map(({ description, icon, name }) => (
+            <article className={style.projectResponsibility} key={name}>
+              <Icon className={style.projectResponsibilityIcon} icon={icon} size="XL" />
+              <h3 className={style.projectResponsibilityName}>{name}</h3>
+              <ClampedText
+                className={style.projectResponsibilityDescription}
+                onClick={() =>
+                  tracking.track(TrackingEvents.CLICK, { label: `Read more about ${name}`, project: project.slug })
+                }
+              >
+                {description}
+              </ClampedText>
+            </article>
+          ))}
+        </div>
+      </section>
+      {Boolean(project.gallery?.length) && (
+        <PreviewGallery gallery={[project.video, ...project.gallery].filter(Boolean)} slug={project.slug} />
+      )}
+      <Comments slug={slug as string} />
+      <RelatedProjects project={project} />
+    </main>
+  );
 }
