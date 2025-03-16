@@ -1,0 +1,93 @@
+@keyframes marching-ants-down {
+  0% { background-position: right 0; }
+  100% { background-position: right 12px; }
+}
+
+@keyframes marching-ants-up {
+  0% { background-position: right 0; }
+  100% { background-position: right -12px; }
+}
+
+@keyframes marching-ants-left {
+  0% { background-position: 0 top; }
+  100% { background-position: -12px top }
+}
+
+@keyframes marching-ants-right {
+  0% { background-position: 0 top; }
+  100% { background-position: 12px top; }
+}
+
+.marching-ants {
+  animation-duration: 400ms;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  position: absolute; 
+  
+
+  &--direction-down,
+  &--direction-up {
+    background: 
+        repeating-radial-gradient(circle at center, var(--primary) 0, var(--primary) 3px, transparent 3px, transparent 12px);
+    background-position: right 0;
+    background-repeat: repeat-y;
+    background-size: 100% 12px;
+  }
+
+  &--direction-left,
+  &--direction-right {
+    background: 
+        repeating-radial-gradient(circle at center, var(--primary) 0, var(--primary) 3px, transparent 3px, transparent 12px);
+    background-position: 0 top;
+    background-repeat: repeat-x;
+    background-size: 12px 100%;
+  }
+
+  &--direction-down {
+    animation-name: marching-ants-down;
+  }
+
+  &--direction-up {
+    animation-name: marching-ants-up;
+  }
+
+  &--direction-left {
+    animation-name: marching-ants-left;
+  }
+ 
+
+  &--direction-right {
+    animation-name: marching-ants-right;
+  }
+ 
+ 
+  &--position-left,
+  &--position-right {
+    bottom: 0;
+    top: 0;
+    width: 6px;
+  }
+
+  &--position-left {
+    left: -6px;
+  }
+
+  &--position-right {
+    right: -6px;
+  }
+
+  &--position-bottom,
+  &--position-top {
+    height: 6px;
+    left: 0;
+    right: 0;
+  }
+
+  &--position-bottom {
+    bottom: -6px;
+  }
+
+  &--position-top {
+    top: -6px;
+  }
+}

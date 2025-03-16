@@ -8,10 +8,23 @@
     align-items: center;
     display: flex;
     gap: 2rem;
-    margin-bottom: 4px;
     position: relative;
 
-    & > div {
+    &__dots--desktop {
+      display: none;
+      @media only screen and (min-width: 680px) {
+        display: block;
+      }
+    }
+
+    &__dots--mobile {
+      display: block;
+      @media only screen and (min-width: 680px) {
+        display: none;
+      }
+    }
+
+    &__details {
       min-width: 0;
 
       &:not(:last-of-type) {
@@ -31,11 +44,10 @@
       margin: 1rem 0;
       text-transform: capitalize;
 
-      &::after {
-        border-top: dotted 6px var(--primary);
-        content: '';
+      &__dots {
         flex: 1;
         margin-right: 4px;
+        position: unset;
       }
     }
 
@@ -44,7 +56,8 @@
     }
 
     &--design {
-      border-right: dotted 6px var(--primary);
+      // this transparent border provides the space for the marchin ants component
+      border-right: solid 6px transparent;
 
       img {
         max-width: 47%;
@@ -55,11 +68,13 @@
       flex-direction: row-reverse;
       gap: 0;
 
-      img {
-        border: dotted 6px var(--primary);
+      .skill__image {
+        // these transparent border provides the space for the marchin ants component
+        border: solid 6px transparent;
         border-right: 0;
         max-width: 37%;
         padding: 2rem 0 2rem 2rem;
+        position: relative;
       }
     }
 
@@ -73,17 +88,10 @@
       .skill__name {
         justify-content: flex-end;
         margin: 4rem 0 1rem;
-
-        &::before {
-          border-right: dotted 6px var(--primary);
-          content: '';
-          height: 5.4rem;
-          position: absolute;
-          top: 0;
-        }
-
-        &::after {
-          margin-right: 12px;
+        
+        &__dots-down {
+          bottom: unset;
+          height: 5.3rem;
         }
       }
     }
@@ -92,7 +100,7 @@
   @media only screen and (max-width: 680px) {
     .skill {
       align-items: center;
-      border-right: dotted 6px var(--primary);
+      border-right: solid 6px transparent;
       flex-direction: column;
 
       &--design {
@@ -103,7 +111,7 @@
       }
 
       &--backend {
-        img {
+        .skill__image {
           border: 0;
           max-width: 70%;
           padding: 0;
@@ -111,8 +119,9 @@
       }
 
       &--frontend {
-        & > div {
+        .skill__details {
           outline: solid 6px var(--background);
+          position: relative;
         }
 
         img {
@@ -123,16 +132,9 @@
           margin: 1rem 0;
           position: relative;
   
-          &::before {
+          &__dots-down {
             height: 2.6rem;
-            position: absolute;
-            right: -6px;
             top: -1.2rem;
-          }
-  
-          &::after {
-            margin-right: 4px;
-            max-width: unset;
           }
         }
       }
